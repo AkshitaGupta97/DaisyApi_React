@@ -9,6 +9,6 @@ export default defineConfig({
     react()
   ],
   daisyui: {
-    themes: ['coffee ']
+    themes: ['luxury']
   }
 })
