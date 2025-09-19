@@ -2,7 +2,9 @@ import React from 'react'
 
 function CoinTable() {
   return (
-    <div>coin</div>
+    <div>
+      
+    </div>
   )
 }
 
