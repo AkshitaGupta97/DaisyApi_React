@@ -9,8 +9,8 @@ function App() {
   return (
    <>
     <Navbar />
-    <CoinTable />
     <Banner />
+    <CoinTable />
    </>
   )
 }
