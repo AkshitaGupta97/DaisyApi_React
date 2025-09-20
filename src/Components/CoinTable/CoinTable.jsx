@@ -10,7 +10,7 @@ function CoinTable({currency}) {
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['coins', page],
+    queryKey: ['coins', page, currency],
     queryFn: () => fetchCoinData(page, currency),
     //retry: 2,
     //retryDelay: 1000,

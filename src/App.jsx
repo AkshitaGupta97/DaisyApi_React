@@ -13,6 +13,7 @@ function App() {
    <>
     <Navbar setCurrency={setCurrency} />
     <Banner />
+    {currency}
     <CoinTable  currency={currency}/>
    </>
   )
