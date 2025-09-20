@@ -14,7 +14,8 @@ function CoinTable() {
     queryFn: () => fetchCoinData(page, 'usd'),
     //retry: 2,
     //retryDelay: 1000,
-    cacheTime: 1000 * 60 * 2
+    cacheTime: 1000 * 60 * 2,
+    staleTime: 1000*60*2 // means no more fetching of data for already fetched data.
   });
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function CoinTable() {
   }, [data])
 
   if (isLoading) {
-    return <h2 className='text-3xl text-blue-400'>Loading ... </h2>
+    return <h2 className='text-3xl font-semibold text-blue-400'>Loading ... </h2>
   }
   if (isError) {
     return <h2 className='text-3xl text-red-600'>Error: {error.message}</h2>
