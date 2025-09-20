@@ -1,9 +1,8 @@
 
 import { useState } from 'react'
 import './App.css'
-import Banner from './Components/Banner/Banner'
-import CoinTable from './Components/CoinTable/CoinTable'
-import Navbar from './Components/CoinTable/Navbar/Navbar'
+import Home from './pages/Home'
+import { CurrencyContext } from './Context/createContext'
 
 function App() {
 
@@ -11,10 +10,9 @@ function App() {
 
   return (
    <>
-    <Navbar setCurrency={setCurrency} />
-    <Banner />
-    {currency}
-    <CoinTable  currency={currency}/>
+   <CurrencyContext.Provider value={{currency, setCurrency}}>
+     <Home />
+   </CurrencyContext.Provider>
    </>
   )
 }
