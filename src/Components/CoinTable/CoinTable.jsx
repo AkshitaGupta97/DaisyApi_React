@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { fetchCoinData } from '../../Services/fetchCoinData'
 import { useQuery } from '@tanstack/react-query';
-import { CurrencyContext } from '../../Context/createContext';
+//import { CurrencyContext } from '../../Context/createContext';
+import CurrencyStore from '../../zustand/store';
+import { useNavigate } from 'react-router-dom';
 
 function CoinTable() {
-  const {currency} = useContext(CurrencyContext)
+  //const {currency} = useContext(CurrencyContext)
+  const {currency} = CurrencyStore();
   /*
   useEffect(() => {
     fetchCoinData()})
@@ -31,6 +34,12 @@ function CoinTable() {
     return <h2 className='text-3xl text-red-600'>Error: {error.message}</h2>
   }
 
+  const navigate = useNavigate();
+
+  function handleCoinRedirect(id){
+    navigate(`/details/${id}`);
+  }
+
 
   return (
     <div className='my-5 flex flex-col items-center justify-center py-1 gap-5 w-[80vw] mx-auto'>
@@ -46,7 +55,7 @@ function CoinTable() {
         {
           data?.map((coin) => {
             return(
-              <div key={coin.id} className='w-full bg-transparent text-white flex py-4 px-2 font-semibold items-center justify-between'>
+              <div onClick={() => handleCoinRedirect(coin.id)} key={coin.id} className='w-full bg-transparent text-white flex py-4 px-2 font-semibold items-center justify-between cursor-pointer'>
                 <div className='flex items-center justify-start gap-3 basis-[35%]'>
 
                   <div className='w-[5rem] h-[5rem]'>

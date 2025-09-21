@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
-import { CurrencyContext } from '../../../Context/createContext';
-
+//import React, { useContext } from 'react'
+//import { CurrencyContext } from '../../../Context/createContext';
+import CurrencyStore from '../../../zustand/store'
 function Navbar() {
 
-    const {setCurrency} = useContext(CurrencyContext);
+    //const {setCurrency} = useContext(CurrencyContext);
+    const {setCurrency} = CurrencyStore();
 
     return (
         <div className="navbar bg-base-100 shadow-sm">
