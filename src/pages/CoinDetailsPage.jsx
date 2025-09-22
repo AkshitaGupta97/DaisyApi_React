@@ -25,7 +25,24 @@ function CoinDetailsPage() {
           src={coin?.image?.large} alt={coin?.name} />
 
         <h1 className='text-3xl font-bold mb-5'>{coin?.name}</h1>
-        <p className='w-full px-6'>{coin?.description?.en}</p>
+        <p className='w-full font-bold  px-6'>{coin?.description?.en}</p>
+
+        <div className='w-full flex flex-col md:flex-row md:justify-around'>
+            <div className='flex items-center mb-4 md:mb-0 mt-2'>
+                <h2 className='text-xl font-bold'>Rank : </h2>
+                <span className='ml-3 text-2xl text-red-400'>
+                  {coin?.market_cap_rank}
+                </span>
+            </div>
+
+            <div className='flex items-center mb-4 md:mb-0 mt-2'>
+               <h2 className='text-2xl font-bold'>Current Price : </h2>
+                <span className='ml-3 text-xl text-yellow-400'>
+                  {coin?.market_data.current_price['usd']}
+                </span>
+            </div>
+        </div>
+
       </div>
 
     </div>
