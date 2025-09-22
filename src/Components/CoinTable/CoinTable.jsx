@@ -12,6 +12,7 @@ function CoinTable() {
   useEffect(() => {
     fetchCoinData()})
    */
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isError, error } = useQuery({
@@ -36,12 +37,9 @@ function CoinTable() {
     return <h2 className='text-3xl text-red-600'>Error: {error.message}</h2>
   }
 
-  const navigate = useNavigate();
-
   function handleCoinRedirect(id){
     navigate(`/details/${id}`);
   }
-
 
   return (
     <div className='my-5 flex flex-col items-center justify-center py-1 gap-5 w-[80vw] mx-auto'>

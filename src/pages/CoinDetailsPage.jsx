@@ -3,21 +3,35 @@ import { useParams } from 'react-router-dom'
 import { fetchCoinDetails } from '../Services/fetchCoinDetails';
 
 function CoinDetailsPage() {
-    const {coinId} = useParams();
-    const {isError, isLoading, data} =  useQuery(['coin', coinId], () => fetchCoinDetails(coinId));
+  const { coinId } = useParams();
+  const { isError, isLoading, data: coin } = useQuery({
+    queryKey: ['coin', coinId],
+    queryFn: () => fetchCoinDetails(coinId),
+    cacheTime: 1000 * 60 * 2,
+    staleTime: 1000 * 60 * 2
+  })
 
-    if(isLoading){
-      return <div className='font-semibold text-orange-400 text-3xl'>Loading...</div>
-    }
-    if(isError){
-      return <div className='text-3xl'>Error :  Something went wrong...</div>
-    }
+  if (isLoading) {
+    return <div className='font-semibold text-orange-400 text-3xl'>Loading...</div>
+  }
+  if (isError) {
+    return <div className='text-3xl'>Error :  Something went wrong...</div>
+  }
 
   return (
-    <div>
-        <h2>coin details page</h2>
+    <div className='flex flex-col md:flex-row'>
+      <div className='md:w-1/3 w-full flex flex-col items-center mt-6 md:mt-0 border-r-2 border-gray-500'>
+        <img className='h-52 mb-5'
+          src={coin?.image?.large} alt={coin?.name} />
+
+        <h1 className='text-3xl font-bold mb-5'>{coin?.name}</h1>
+        <p className='w-full px-6'>{coin?.description?.en}</p>
+      </div>
+
     </div>
   )
 }
 
 export default CoinDetailsPage
+
+// here we have destructured data:coin. data to coin
