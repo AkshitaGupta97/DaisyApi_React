@@ -23,10 +23,12 @@ function CoinTable() {
     staleTime: 1000*60*2 // means no more fetching of data for already fetched data.
   });
 
-  useEffect(() => {
+   /*
+    useEffect(() => {
     console.log(data);
   }, [data])
 
+    */
   if (isLoading) {
     return <h2 className='text-3xl font-semibold text-blue-400'>Loading ... </h2>
   }

@@ -9,7 +9,7 @@ function Routing() {
   return (
     <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route index element={<Home />} />
+          <Route index element={<Home />} />  {/* index - is same as path="/", just to make things simple */}
           <Route path='/details/:coinId' element={<CoinDetailsPage />} />
         </Route>
         
