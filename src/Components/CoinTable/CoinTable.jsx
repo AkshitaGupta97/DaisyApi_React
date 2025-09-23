@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 //import { CurrencyContext } from '../../Context/createContext';
 import CurrencyStore from '../../zustand/store';
 import { useNavigate } from 'react-router-dom';
+import MyLoader from '../../PageLoader/MyPageLoader';
 
 function CoinTable() {
   //const {currency} = useContext(CurrencyContext)
@@ -31,7 +32,7 @@ function CoinTable() {
 
     */
   if (isLoading) {
-    return <h2 className='text-3xl font-semibold text-blue-400'>Loading ... </h2>
+    return <MyLoader />
   }
   if (isError) {
     return <h2 className='text-3xl text-red-600'>Error: {error.message}</h2>
@@ -60,7 +61,7 @@ function CoinTable() {
 
                   <div className='w-[5rem] h-[5rem]'>
                     <img src={coin.image} className='w-full h-full'
-                     alt="coin-images" />
+                     alt="coin-images" loading='lazy' />  {/* loading='lazy' -> means images are loaded after scrolling */}
                   </div>
 
                   <div className='flex flex-col'>

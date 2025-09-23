@@ -1,7 +1,6 @@
 import React from 'react'
 import BannerImage from '../../assets/developer-banner.jpg'
 
-
 function Banner() {
   return (
     <div className='w-full h-[25rem] relative'>
