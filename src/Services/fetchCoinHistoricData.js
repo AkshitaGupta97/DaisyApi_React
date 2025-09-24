@@ -1,16 +1,11 @@
 import axiosInstance from "../helpers/axiosInstance";
 
-export async function fetchCoinHistoricData(id, days = 7, interval, currency = 'usd'){
-   
-    try{
-        const response = await axiosInstance.get(`/coins/${id}/market_chart?days=${days}&vs_currency=${currency}&interval=${interval}`)
-       // console.log(response);
+export async function fetchCoinHistoricData(coinId, days = 7, interval, currency = 'usd'){
+    try {
+        const response = await axiosInstance.get(`/coins/${coinId}/market_chart?days=${days}&vs_currency=${currency}&interval=${interval}`);
         return response.data;
-        
-    }
-    catch(error){
+    } catch (error) {
         console.log(error);
         return null;
-        
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+// this file is from daisy-ui alert.
 
 function ErrorAlert({message, type}) {
     return (

@@ -1,31 +1,92 @@
 import ErrorAlert from "../Alert-Daisy/ErrorAlert"
-import {Line} from 'react-chartjs-2'
-import {} from 
+import { Line } from 'react-chartjs-2'
+import { CategoryScale } from 'chart.js'
+import Chart from 'chart.js/auto'
 
-function CoinInformation({historicData, setDays, setCoinInterval}) {
 
-  if(!historicData){
+function CoinInformation({ historicData, setDays, setCoinInterval, days, currency }) {
+  Chart.register(CategoryScale)
+
+  if (!historicData) {
     return <ErrorAlert message='No data availabe' type='info' />
   }
+
+  const chartDays = [
+    {
+      label: '24 Hours',
+      value: 1
+    },
+    {
+      label: '7 Days',
+      value: 7
+    },
+    {
+      label: '30 Days',
+      value: 30
+    },
+    {
+      label: '90 Days',
+      value: 90
+    },
+    {
+      label: '365 Days',
+      value: 365
+    }
+  ]
+
+  const handleDayChange = (e) => {
+    console.log(e.target.options[e.target.selectedIndex].value);
+    setDays(e.target.options[e.target.selectedIndex].value)
+    
+  }
+
 
   return (
     <div className="flex flex-col items-center justify-center mt-6 p-6 w-full md:w-3/4">
 
-      <Line 
-        data={{
-          labels: [],
-          datasets: [
-            {
-              data: [3, 5, 7, 9, 1]  // this i for line 1
-            },
-            {
-              data: [9, 8, 2, 4, 5]  // this is for line 2
-            }
-        ],
-          
-        }}
-      />
+      <div className="h-[300px] w-full">
+        <Line
+          data={{
+            labels: historicData.prices.map(coinPrice => {
+              let date = new Date(coinPrice[0]); // converting UNIX timestamp to date
+              let time = date.getHours() > 12 ? `${date.getHours() - 12}: ${date.getMinutes()} PM` :
+                `${date.getHours()}:${date.getMinutes()} AM`;   // here we are converting 24hr to 12hr time
+              return days === 1 ? time : date.toLocaleDateString(); // if chart is for one day, then give time else give date to normal format
+            }),
+            datasets: [
+              {
+                label: `Price in (Past ${days} ${days === 1 ? 'Day' : 'Days'}) in ${currency.toUpperCase()}`,
+                data: historicData.prices.map(coinPrice => coinPrice[1])
+              }
+            ],
 
+          }}
+
+          options={{
+            responsive: true,
+            maintainAspectRatio: false, // it will allow to resize the chart
+            elements: {
+              point: {
+                radius: 0
+              }
+            }
+          }}
+        />
+      </div>
+
+      <div className="flex justify-center mt-5 w-full">
+        <select onChange={handleDayChange}
+        className="select select-secondary w-full max-w-xs"> 
+          {
+            chartDays.map((day, index) => {
+              return (
+                <option key={index} value={day.value}>{day.label}</option>
+              )
+            })
+          }
+        </select>
+
+      </div>
 
     </div>
   )
@@ -34,3 +95,5 @@ function CoinInformation({historicData, setDays, setCoinInterval}) {
 export default CoinInformation
 
 // this Line components is from reactChartjs.
+// options helps to give better  ui, as it remove the radius and give clean chart
+// <select className="select select-secondary w-full max-w-xs">  -> from daisy-ui
