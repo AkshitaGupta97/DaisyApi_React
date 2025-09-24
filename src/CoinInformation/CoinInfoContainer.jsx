@@ -5,12 +5,13 @@ import CoinInformation from './CoinInformation'
 import { fetchCoinHistoricData } from '../Services/fetchCoinHistoricData';
 import MyLoader from '../PageLoader/MyPageLoader';
 import ErrorAlert from '../Alert-Daisy/ErrorAlert';
+import { useQuery } from '@tanstack/react-query';
 
-function CoinInfoContainer() {
+function CoinInfoContainer(coinId) {
 
     const {currency} = CurrencyStore();
     const [days, setDays] = useState(7);
-    const [interval, setInterval] = useState('')
+    const [interval, setCoinInterval] = useState('')
 
     const { data: historicData, isLoading, isError } = useQuery({
         queryKey: ['coinHistoricData', coinId, currency, days, interval],
@@ -29,7 +30,7 @@ function CoinInfoContainer() {
 
   return (
     <>
-        <CoinInformation />
+        <CoinInformation historicData={historicData} setDays={setDays} setCoinInterval={setCoinInterval}/>
     </>
   )
 }
