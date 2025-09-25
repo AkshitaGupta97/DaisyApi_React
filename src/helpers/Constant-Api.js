@@ -1,7 +1,7 @@
 
 export const CoinGeco_Api_Url = 'https://api.coingecko.com/api/v3'
 
-// tis is used in CoinInformation
+// this is used in CoinInformation
 export const chartDays = [
     {
         label: '24 Hours',

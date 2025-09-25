@@ -5,11 +5,12 @@ import ErrorAlert from '../Alert-Daisy/ErrorAlert';
 import useFetchCoinHistory from '../hooks/useFetchCoinHistory';
 
 //const [historicData, isError, isLoading, currency, days, setDays, setCoinInterval] = useFetchCoinHistory(coinId); as we have created a used custom hook,
+// this hook is created in different file, if in case we want different ui in other pages but logic is same
 
 
 function CoinInfoContainer({coinId}) {
  
-     const [historicData, isError, isLoading, currency, days, setDays, setCoinInterval] = useFetchCoinHistory(coinId); 
+     const {historicData, isError, isLoading, currency, days, setDays, setCoinInterval} = useFetchCoinHistory(coinId); 
 
     if(isLoading){
         return <MyLoader/>

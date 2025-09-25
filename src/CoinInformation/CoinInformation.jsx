@@ -5,10 +5,9 @@ import Chart from 'chart.js/auto'
 import { chartDays } from "../helpers/Constant-Api"
 
 
+ Chart.register(CategoryScale)
+
 function CoinInformation({ historicData, setDays, setCoinInterval, days, currency }) {
-
-  Chart.register(CategoryScale)
-
   if (!historicData) {
     return <ErrorAlert message='No data availabe' type='info' />
   }
@@ -18,10 +17,10 @@ function CoinInformation({ historicData, setDays, setCoinInterval, days, currenc
     console.log(e.target.options[e.target.selectedIndex].value);
     const daysSelected = e.target.options[e.target.selectedIndex].value;
     if(daysSelected == 1){
-      setCoinInterval('hourly');
+      setCoinInterval?.('hourly');
     }
     else {
-      setCoinInterval('daily')
+      setCoinInterval?.('daily')
     }
     setDays(daysSelected);
     
@@ -36,13 +35,13 @@ function CoinInformation({ historicData, setDays, setCoinInterval, days, currenc
           data={{
             labels: historicData.prices.map(coinPrice => {
               let date = new Date(coinPrice[0]); // converting UNIX timestamp to date
-              let time = date.getHours() > 12 ? `${date.getHours() - 12}: ${date.getMinutes()} PM` :
-                `${date.getHours()}:${date.getMinutes()} AM`;   // here we are converting 24hr to 12hr time
+              let time = date?.getHours() > 12 ? `${date?.getHours() - 12}: ${date?.getMinutes()} PM` :
+                `${date?.getHours()}:${date?.getMinutes()} AM`;   // here we are converting 24hr to 12hr time
               return days === 1 ? time : date.toLocaleDateString(); // if chart is for one day, then give time else give date to normal format
             }),
             datasets: [
               {
-                label: `Price in (Past ${days} ${days === 1 ? 'Day' : 'Days'}) in ${currency.toUpperCase()}`,
+                label: `Price in (Past ${days} ${days === 1 ? 'Day' : 'Days'}) in ${currency?.toUpperCase()}`,
                 data: historicData.prices.map(coinPrice => coinPrice[1])
               }
             ],

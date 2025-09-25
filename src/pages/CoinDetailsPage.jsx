@@ -1,19 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+
 import { useParams } from 'react-router-dom'
-import { fetchCoinDetails } from '../Services/fetchCoinDetails';
-import CurrencyStore from '../zustand/store';
 import MyLoader from '../PageLoader/MyPageLoader';
 import CoinInfoContainer from '../CoinInformation/CoinInfoContainer';
+import useFetchCoin from '../hooks/useFetchCoin';
 
 function CoinDetailsPage() {
-  const { coinId } = useParams();
-  const {currency} = CurrencyStore();
-  const { isError, isLoading, data: coin } = useQuery({
-    queryKey: ['coin', coinId],
-    queryFn: () => fetchCoinDetails(coinId),
-    cacheTime: 1000 * 60 * 2,
-    staleTime: 1000 * 60 * 2
-  })
+  const {coinId} = useParams();
+
+  const {isLoading, isError, currency, coin} = useFetchCoin(coinId)
 
   if (isLoading) {
     return <MyLoader/>

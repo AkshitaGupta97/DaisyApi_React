@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchCoinData } from '../../Services/fetchCoinData'
 import { useQuery } from '@tanstack/react-query';
 //import { CurrencyContext } from '../../Context/createContext';
 import CurrencyStore from '../../zustand/store';
 import { useNavigate } from 'react-router-dom';
 import MyLoader from '../../PageLoader/MyPageLoader';
+import SearchBar from '../../SearchBar/SearchBar';
 
 function CoinTable() {
   //const {currency} = useContext(CurrencyContext)
@@ -15,6 +16,8 @@ function CoinTable() {
    */
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
+  
+  const [filtered, setFiltered] = useState([]);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['coins', page, currency],
@@ -24,7 +27,13 @@ function CoinTable() {
     cacheTime: 1000 * 60 * 2,
     staleTime: 1000*60*2 // means no more fetching of data for already fetched data.
   });
-
+  
+    useEffect(() => {
+      if(data) {
+        setFiltered(data);
+      }
+    })
+  
    /*
     useEffect(() => {
     console.log(data);
@@ -43,6 +52,7 @@ function CoinTable() {
   }
 
   return (
+    
     <div className='my-5 flex flex-col items-center justify-center py-1 gap-5 w-[80vw] mx-auto'>
 
       <div className='w-full bg-yellow-400 text-black flex py-4 px-2 font-semibold items-center justify-around  '>
@@ -51,6 +61,8 @@ function CoinTable() {
         <div className='baiss-[20%]'>24hr change</div>
         <div className='baiss-[15%]'>Market Cap</div>
       </div>
+
+      <SearchBar coin={data} setFiltered={setFiltered}  />
 
       <div className='flex flex-col w-[80vw] mx-auto'>
         {
