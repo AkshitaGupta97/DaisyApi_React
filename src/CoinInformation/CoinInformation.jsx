@@ -2,42 +2,22 @@ import ErrorAlert from "../Alert-Daisy/ErrorAlert"
 import { Line } from 'react-chartjs-2'
 import { CategoryScale } from 'chart.js'
 import Chart from 'chart.js/auto'
+import { chartDays } from "../helpers/Constant-Api"
 
 
 function CoinInformation({ historicData, setDays, setCoinInterval, days, currency }) {
+
   Chart.register(CategoryScale)
 
   if (!historicData) {
     return <ErrorAlert message='No data availabe' type='info' />
   }
 
-  const chartDays = [
-    {
-      label: '24 Hours',
-      value: 1
-    },
-    {
-      label: '7 Days',
-      value: 7
-    },
-    {
-      label: '30 Days',
-      value: 30
-    },
-    {
-      label: '90 Days',
-      value: 90
-    },
-    {
-      label: '365 Days',
-      value: 365
-    }
-  ]
-
+  
   const handleDayChange = (e) => {
     console.log(e.target.options[e.target.selectedIndex].value);
     const daysSelected = e.target.options[e.target.selectedIndex].value;
-    if(daysSelected === 1){
+    if(daysSelected == 1){
       setCoinInterval('hourly');
     }
     else {
@@ -87,7 +67,7 @@ function CoinInformation({ historicData, setDays, setCoinInterval, days, currenc
           {
             chartDays.map((day, index) => {
               return (
-                <option key={index} value={day.value}>{day.label}</option>
+                <option selected={days == day.value} key={index} value={day.value}>{day.label}</option>
               )
             })
           }

@@ -1,24 +1,15 @@
 
-import { useState } from 'react';
-import CurrencyStore from '../zustand/store'
 import CoinInformation from './CoinInformation'
-import { fetchCoinHistoricData } from '../Services/fetchCoinHistoricData';
 import MyLoader from '../PageLoader/MyPageLoader';
 import ErrorAlert from '../Alert-Daisy/ErrorAlert';
-import { useQuery } from '@tanstack/react-query';
+import useFetchCoinHistory from '../hooks/useFetchCoinHistory';
+
+//const [historicData, isError, isLoading, currency, days, setDays, setCoinInterval] = useFetchCoinHistory(coinId); as we have created a used custom hook,
+
 
 function CoinInfoContainer({coinId}) {
  
-    const {currency} = CurrencyStore();
-    const [days, setDays] = useState(7);  // you can also change the days to 1
-    const [interval, setCoinInterval] = useState('daily')
-
-    const { data: historicData, isLoading, isError } = useQuery({
-        queryKey: ['coinHistoricData', coinId,days, interval, currency],
-        queryFn: () => fetchCoinHistoricData(coinId,days, interval, currency),
-        cacheTime: 1000*60*2,
-        staleTime: 1000*60*2
-    });
+     const [historicData, isError, isLoading, currency, days, setDays, setCoinInterval] = useFetchCoinHistory(coinId); 
 
     if(isLoading){
         return <MyLoader/>
