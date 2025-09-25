@@ -36,7 +36,14 @@ function CoinInformation({ historicData, setDays, setCoinInterval, days, currenc
 
   const handleDayChange = (e) => {
     console.log(e.target.options[e.target.selectedIndex].value);
-    setDays(e.target.options[e.target.selectedIndex].value)
+    const daysSelected = e.target.options[e.target.selectedIndex].value;
+    if(daysSelected === 1){
+      setCoinInterval('hourly');
+    }
+    else {
+      setCoinInterval('daily')
+    }
+    setDays(daysSelected);
     
   }
 
