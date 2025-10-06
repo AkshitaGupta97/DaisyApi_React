@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { fetchCoinData } from '../../Services/fetchCoinData'
 import { useQuery } from '@tanstack/react-query';
 //import { CurrencyContext } from '../../Context/createContext';
 import CurrencyStore from '../../zustand/store';
 import { useNavigate } from 'react-router-dom';
 import MyLoader from '../../PageLoader/MyPageLoader';
-import SearchBar from '../../SearchBar/SearchBar';
+//import SearchBar from '../../SearchBar/SearchBar';
 
 function CoinTable() {
   //const {currency} = useContext(CurrencyContext)
@@ -17,22 +17,16 @@ function CoinTable() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   
-  const [filtered, setFiltered] = useState([]);
+  const [searchTerm, setSearchTerm] = useState([]);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['coins', page, currency],
-    queryFn: () => fetchCoinData(page, currency),
+    queryFn: () => fetchCoinData(page, currency, searchTerm),
     //retry: 2,
     //retryDelay: 1000,
     cacheTime: 1000 * 60 * 2,
     staleTime: 1000*60*2 // means no more fetching of data for already fetched data.
   });
-  
-    useEffect(() => {
-      if(data) {
-        setFiltered(data);
-      }
-    })
   
    /*
     useEffect(() => {
@@ -62,7 +56,7 @@ function CoinTable() {
         <div className='baiss-[15%]'>Market Cap</div>
       </div>
 
-      <SearchBar coin={data} setFiltered={setFiltered}  />
+     {/*  <SearchBar setSearchTerm={setSearchTerm}  /> */}
 
       <div className='flex flex-col w-[80vw] mx-auto'>
         {
